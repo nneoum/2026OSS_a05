@@ -12,12 +12,12 @@
             const list = document.querySelector("#list"); //추가용
 
             add.addEventListener("click", function () {
-                const plist = document.createElement("text");
-                plist.textContent = "등록 목록";
-                //for(let i = 0; i< flist.length; i++){
+                if(name.value.trim() === "" || email.value.trim() === ""){
+                    alert("필수입력");
+                    return;
+                }
                 const li = document.createElement("li");
-                li.textContent = name.value + " " + email.value;
-                //li.textContent = flist[i];
+                li.textContent = name.value + " | " + email.value;
 
                 const dltBtn = document.createElement("button");
                 dltBtn.textContent = "삭제";
