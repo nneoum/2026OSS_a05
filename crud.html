@@ -46,7 +46,7 @@
             const list = document.querySelector("#list");
 
             let idAdd = 4;
-            let isEdit = null;
+            let editId = null;
 
             function loading() {
                 list.innerHTML = "";
@@ -58,14 +58,26 @@
                     edtBtn.textContent = "수정";
 
                     edtBtn.addEventListener("click", function () {
-
+                        title.value = book.title;
+                        author.value = book.author;
+                        category.value = book.category;
+                        price.value = book.price;
+                        year.value = book.year;
+                        editId = book.id;
+                        add.textContect = "저장";
                     });
 
                     const dltBtn = document.createElement("button");
                     dltBtn.textContent = "삭제";
 
                     dltBtn.addEventListener("click", function () {
-
+                        if (confirm("삭제?")) {
+                            books = books.filter(function (b) {
+                                return b.id !== book.id;
+                            });
+                            idAdd--;
+                            loading();
+                        }
                     });
 
                     li.appendChild(edtBtn);
@@ -108,17 +120,29 @@
             add.addEventListener("click", function () {
                 if (!validation()) return;
 
-                books.push(
-                    {
-                        id:idAdd,
-                        title: title.value.trim(),
-                        author: author.value.trim(),
-                        category: category.value.trim(),
-                        price: price.value.trim(),
-                        year: year.value.trim()
-                    })
+                if (editId == null) {
+                    books.push(
+                        {
+                            id: idAdd,
+                            title: title.value.trim(),
+                            author: author.value.trim(),
+                            category: category.value.trim(),
+                            price: Number(price.value),
+                            year: Number(year.value)
+                        })
+                    idAdd++;
+                } else {
+                    const target = books.find(function (b) {
+                        return b.id === editId;
+                    });
+                    target.title = title.value.trim();
+                    target.author   = author.value.trim();
+                    target.category = category.value.trim();
+                    target.price = price.value.trim();
+                    target.year = year.value.trim();
 
-                idAdd++;
+                    editId = null;
+                }
 
                 title.value = author.value = category.value = price.value = year.value = "";
                 loading();
