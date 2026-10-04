@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //도서관리 
+        let books = [
+            {
+                id: 1,
+                title: "HTML",
+                author: "Kim",
+                category: "Web",
+                price: 10000,
+                year: 1999
+            },
+            {
+                id: 2,
+                title: "CSS",
+                author: "Lee",
+                category: "Web",
+                price: 12000,
+                year: 2010
+            },
+            {
+                id: 3,
+                title: "JavaScript",
+                author: "Park",
+                category: "Web",
+                price: 15000,
+                year: 2020
+            }
+        ];
+
+        // -------------------------
+
+        window.addEventListener("load", function () {
+            const title = document.querySelector("#title");
+            const author = document.querySelector("#author");
+            const category = document.querySelector("#category");
+            const price = document.querySelector("#price");
+            const year = document.querySelector("#year");
+            const add = document.querySelector("#add");
+            const list = document.querySelector("#list");
+
+            let idAdd = 4;
+            let isEdit = null;
+
+            function loading() {
+                list.innerHTML = "";
+                books.forEach(function (book) {
+                    const li = document.createElement("li");
+                    li.textContent = book.id + " " + book.title + " " + book.author + " " + book.category + " " + book.price + " " + book.year;
+
+                    const edtBtn = document.createElement("button");
+                    edtBtn.textContent = "수정";
+
+                    edtBtn.addEventListener("click", function () {
+
+                    });
+
+                    const dltBtn = document.createElement("button");
+                    dltBtn.textContent = "삭제";
+
+                    dltBtn.addEventListener("click", function () {
+
+                    });
+
+                    li.appendChild(edtBtn);
+                    li.appendChild(dltBtn);
+                    list.appendChild(li);
+                });
+            }
+            loading();
+
+            function validation() {
+                if (title.value.trim() == "") {
+                    alert("제목입력");
+                    title.focus();
+                    return false;
+                }
+                if (author.value.trim() == "") {
+                    alert("저자입력");
+                    author.focus();
+                    return false;
+                }
+                if (category.value.trim() == "") {
+                    alert("분류입력");
+                    category.focus();
+                    return false;
+                }
+                if (price.value.trim() == "") {
+                    alert("가격입력");
+                    price.focus();
+                    return false;
+                }
+                if (year.value.trim() == "") {
+                    alert("연도입력");
+                    year.focus();
+                    return false;
+                }
+
+                return true;
+            }
+
+            add.addEventListener("click", function () {
+                if (!validation()) return;
+
+                books.push(
+                    {
+                        id:idAdd,
+                        title: title.value.trim(),
+                        author: author.value.trim(),
+                        category: category.value.trim(),
+                        price: price.value.trim(),
+                        year: year.value.trim()
+                    })
+
+                idAdd++;
+
+                title.value = author.value = category.value = price.value = year.value = "";
+                loading();
+            });
+        });
+
+        //--------------------
+
+    </script>
+
+
+</head>
+
+<body>
+    <h1> book management </h1>
+    <div> 제목
+        <input type="text" id="title">
+    </div>
+    <div> 저자
+        <input type="text" id="author">
+    </div>
+    <div> 분류
+        <input type="text" id="category">
+    </div>
+    <div> 가격
+        <input type="text" id="price">
+    </div>
+    <div> 연도
+        <input type="text" id="year">
+    </div>
+
+    <button id="add"> [Add] </button>
+
+    <p> ID 제목 저자 분류 가격 연도 </p>
+
+    <ul id="list"> </ul>
+</body>
+
+</html>
