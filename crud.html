@@ -5,6 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color:antiquewhite;
+            max-width: 600px;
+            margin: 30px;
+        }
+
+        div {
+            margin: 15px;
+        }
+
+        p {
+            margin-left : 40px;
+            padding-left : 30px;
+        }
+
+        button{
+            margin: 5px;
+            padding: 10px;
+        }
+
+        ul {
+            list-style: none;
+        }
+        
+        li {
+            padding: 10px;
+        }
+
+        li button:nth-of-type(1):hover{
+            background: rgb(126, 239, 149);
+        }
+
+        li button:nth-of-type(2):hover{
+            background: rgb(230, 108, 108);
+        }
+
+    </style>
+
     <script>
         //도서관리 
         let books = [
@@ -64,8 +105,10 @@
                         price.value = book.price;
                         year.value = book.year;
                         editId = book.id;
-                        add.textContect = "저장";
+                        add.textContent = "저장";
                     });
+
+                    add.textContent = "[Add]";
 
                     const dltBtn = document.createElement("button");
                     dltBtn.textContent = "삭제";
@@ -75,7 +118,7 @@
                             books = books.filter(function (b) {
                                 return b.id !== book.id;
                             });
-                            idAdd--;
+
                             loading();
                         }
                     });
@@ -93,23 +136,32 @@
                     title.focus();
                     return false;
                 }
+
                 if (author.value.trim() == "") {
                     alert("저자입력");
                     author.focus();
                     return false;
                 }
+
+                if (author.value.trim().length < 2) {
+                    alert("저자 : 2자 이상 입력");
+                    author.focus();
+                    return false;
+                }
+
+
                 if (category.value.trim() == "") {
                     alert("분류입력");
                     category.focus();
                     return false;
                 }
-                if (price.value.trim() == "") {
-                    alert("가격입력");
+                if (price.value.trim() == "" || Number(price.value) < 1 || isNaN(price.value)) {
+                    alert("가격은 1 이상 숫자로 입력");
                     price.focus();
                     return false;
                 }
-                if (year.value.trim() == "") {
-                    alert("연도입력");
+                if (year.value.trim() == "" || Number(year.value) < 1900 || Number(year.value) > 2026 || isNaN(year.value)) {
+                    alert("연도는 1900 ~ 2026 사이 숫자로 입력");
                     year.focus();
                     return false;
                 }
@@ -121,6 +173,7 @@
                 if (!validation()) return;
 
                 if (editId == null) {
+
                     books.push(
                         {
                             id: idAdd,
@@ -136,11 +189,10 @@
                         return b.id === editId;
                     });
                     target.title = title.value.trim();
-                    target.author   = author.value.trim();
+                    target.author = author.value.trim();
                     target.category = category.value.trim();
-                    target.price = price.value.trim();
-                    target.year = year.value.trim();
-
+                    target.price = Number(price.value);
+                    target.year = Number(year.value);
                     editId = null;
                 }
 
@@ -152,8 +204,6 @@
         //--------------------
 
     </script>
-
-
 </head>
 
 <body>
