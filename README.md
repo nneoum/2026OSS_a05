@@ -2,7 +2,11 @@
 
 ## Deployment
 
-Vercel URL: 
+Vercel URL:  
+https://2026-oss-a05.vercel.app/js_dynamic.html
+https://2026-oss-a05.vercel.app/crud.html
+https://2026-oss-a05.vercel.app/
+
 
 ## Key Learning
 
